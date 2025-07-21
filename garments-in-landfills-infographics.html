@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wasted Wardrobes: The Global Textile Waste Crisis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 
+    Palette Selection: Energetic & Playful
+    #FF6B6B (Red)
+    #FFD166 (Yellow)
+    #06D6A0 (Green)
+    #118AB2 (Blue)
+    #073B4C (Dark Navy)
+    -->
+
+    <!--
+    Narrative & Structure Plan:
+    1.  Introduction/Hook: Start with a powerful headline and a shocking "big number" statistic to immediately convey the scale of the problem (92 million tons annually).
+    2.  Data Overview - The Fate of Our Clothes: Use a donut chart to show the composition of what happens to textile waste (landfilled, incinerated, recycled). This gives a clear, high-level breakdown.
+    3.  Key Trend - A Worsening Problem: Present a line chart showing the historical increase in landfilled textiles in the U.S. (as a proxy for global trends) to demonstrate that the issue is growing over time.
+    4.  In-Depth Analysis - What's in Our Wardrobe?: Use another donut chart to show the material composition of modern clothing (synthetics vs. natural fibers) to connect the issue to plastic pollution. This is paired with a visual on decomposition times.
+    5.  Categorical Comparison - Global Contributors: A horizontal bar chart will rank the top countries by textile waste generation, providing a global perspective on where the waste is produced.
+    6.  Process Flow - The Linear Lifecycle: A simple, non-SVG flowchart created with HTML/CSS will illustrate the linear "take-make-dispose" model of fast fashion, highlighting overproduction and under-utilization.
+    7.  Conclusion - The Environmental Cost: Summarize the key environmental impacts (water, CO2, microplastics) using clean, icon-like cards to reinforce the consequences.
+    -->
+
+    <!--
+    Visualization Selection & Justification (NO SVG, NO MERMAID JS CONFIRMED):
+    -   Annual Global Waste:
+        -   Goal: Inform.
+        -   Visualization: Single Big Number.
+        -   Justification: The most direct way to present a single, powerful KPI.
+        -   Library/Method: HTML/Tailwind.
+    -   Fate of Discarded Textiles:
+        -   Goal: Compare (Composition).
+        -   Visualization: Donut Chart.
+        -   Justification: Ideal for showing parts of a whole in a visually appealing way.
+        -   Library/Method: Chart.js (Canvas).
+    -   U.S. Landfilled Textiles Over Time:
+        -   Goal: Change (Show trend over time).
+        -   Visualization: Line Chart.
+        -   Justification: The standard and most effective way to show change in a continuous data series over time.
+        -   Library/Method: Chart.js (Canvas).
+    -   Fabric Composition (Synthetics vs. Natural):
+        -   Goal: Compare (Composition).
+        -   Visualization: Donut Chart.
+        -   Justification: Same as above, excellent for showing proportional breakdown.
+        -   Library/Method: Chart.js (Canvas).
+    -   Top Waste Producing Countries:
+        -   Goal: Compare (Ranked Categories).
+        -   Visualization: Horizontal Bar Chart.
+        -   Justification: Best for comparing discrete categories with long labels, allowing for easy ranking and value comparison.
+        -   Library/Method: Chart.js (Canvas).
+    -   Fast Fashion Lifecycle:
+        -   Goal: Organize (Show a process).
+        -   Visualization: Flow Chart.
+        -   Justification: Clearly illustrates a linear sequence of events.
+        -   Library/Method: Structured HTML/CSS with Tailwind (Flexbox and borders). CONFIRMED NO SVG/MERMAID.
+    -   Environmental Impact Cards:
+        -   Goal: Inform.
+        -   Visualization: Icon-like cards.
+        -   Justification: A visually clean way to present multiple distinct data points with icons.
+        -   Library/Method: HTML/Tailwind using Unicode characters. CONFIRMED NO SVG.
+    -->
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .chart-container { position: relative; width: 100%; max-width: 550px; margin-left: auto; margin-right: auto; height: 300px; max-height: 350px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; max-height: 400px; } }
+        .brand-dark { color: #073B4C; }
+        .brand-red { color: #FF6B6B; }
+        .brand-yellow { color: #FFD166; }
+        .brand-green { color: #06D6A0; }
+        .brand-blue { color: #118AB2; }
+        .bg-brand-dark { background-color: #073B4C; }
+        .bg-brand-red { background-color: #FF6B6B; }
+        .bg-brand-yellow { background-color: #FFD166; }
+        .bg-brand-green { background-color: #06D6A0; }
+        .bg-brand-blue { background-color: #118AB2; }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black brand-dark mb-4">Wasted Wardrobes</h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">The fast fashion industry has created an environmental crisis. This is the story of what happens to the billions of garments produced each year after they leave the shelf.</p>
+        </header>
+
+        <section class="text-center bg-white rounded-lg shadow-xl p-8 mb-12">
+            <h2 class="text-2xl font-bold brand-dark mb-2">A Global Mountain of Waste</h2>
+            <p class="text-6xl md:text-8xl font-extrabold brand-red">92 Million Tons</p>
+            <p class="text-lg text-slate-600 mt-2">Of textile waste are generated globally every single year. That's equivalent to a garbage truck full of clothing being landfilled or incinerated <span class="font-bold">every second.</span></p>
+        </section>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="md:col-span-2 lg:col-span-1 bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl font-bold brand-dark mb-2">The Fate of Our Clothes</h3>
+                    <p class="text-slate-600 mb-4">Once discarded, very little textile waste is managed sustainably. The overwhelming majority is either buried in landfills or burned, representing a massive loss of material value and a significant environmental burden.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="fateOfTextilesChart"></canvas>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+                <div>
+                    <h3 class="text-xl font-bold brand-dark mb-2">An Alarming Trend: Landfills on the Rise</h3>
+                    <p class="text-slate-600 mb-4">Data from the U.S. Environmental Protection Agency shows a dramatic and sustained increase in the amount of textile waste sent to landfills over the past several decades. This trend highlights the unsustainable trajectory of linear consumption.</p>
+                </div>
+                <div class="w-full max-w-4xl mx-auto h-80 md:h-96">
+                    <canvas id="landfillTrendChart"></canvas>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-1 bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl font-bold brand-dark mb-2">The Plastic in Our Wardrobes</h3>
+                    <p class="text-slate-600 mb-4">The majority of modern clothing is made from synthetic, plastic-based fibers like polyester and nylon. These materials are cheap to produce but are non-biodegradable and shed microplastics with every wash.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="fabricCompositionChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+                 <h3 class="text-xl font-bold brand-dark mb-4 text-center">Decomposition Timeline</h3>
+                 <div class="space-y-4">
+                     <div class="flex items-center">
+                         <span class="text-3xl mr-4">👕</span>
+                         <div>
+                             <p class="font-semibold">Cotton T-Shirt</p>
+                             <p class="text-slate-500">Up to 6 months</p>
+                         </div>
+                     </div>
+                     <div class="flex items-center">
+                         <span class="text-3xl mr-4">👖</span>
+                         <div>
+                             <p class="font-semibold">Denim Jeans</p>
+                             <p class="text-slate-500">10-12 months</p>
+                         </div>
+                     </div>
+                     <div class="flex items-center">
+                         <span class="text-3xl mr-4">👟</span>
+                         <div>
+                             <p class="font-semibold">Polyester Sportswear</p>
+                             <p class="brand-red font-bold">20 to 200+ years</p>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+
+            <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+                <div>
+                    <h3 class="text-xl font-bold brand-dark mb-2">Top Global Textile Waste Generators</h3>
+                    <p class="text-slate-600 mb-4">While fashion is a global industry, waste generation is concentrated. Industrial and consumer powerhouses lead the world in producing the largest volumes of discarded textiles annually.</p>
+                </div>
+                <div class="w-full max-w-4xl mx-auto h-80 md:h-96">
+                    <canvas id="topCountriesChart"></canvas>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold brand-dark mb-4 text-center">The Linear Lifecycle of Fast Fashion</h3>
+                <p class="text-slate-600 mb-8 max-w-2xl mx-auto text-center">The core of the problem lies in the industry's linear "take-make-dispose" model, which prioritizes speed and volume over durability and circularity, inevitably leading to massive waste.</p>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="text-center p-4 border-2 border-slate-200 rounded-lg w-full md:w-auto">
+                        <p class="text-2xl mb-2">🏭</p>
+                        <p class="font-bold">Overproduction</p>
+                        <p class="text-sm text-slate-500">Billions of items made</p>
+                    </div>
+                    <div class="text-2xl brand-blue font-bold transform md:rotate-0 rotate-90">&rarr;</div>
+                    <div class="text-center p-4 border-2 border-slate-200 rounded-lg w-full md:w-auto">
+                        <p class="text-2xl mb-2">💸</p>
+                        <p class="font-bold">Under-utilization</p>
+                        <p class="text-sm text-slate-500">Worn < 10 times</p>
+                    </div>
+                    <div class="text-2xl brand-blue font-bold transform md:rotate-0 rotate-90">&rarr;</div>
+                    <div class="text-center p-4 border-2 border-slate-200 rounded-lg w-full md:w-auto">
+                        <p class="text-2xl mb-2">🗑️</p>
+                        <p class="font-bold">Rapid Disposal</p>
+                        <p class="text-sm text-slate-500">Thrown out in < 1 year</p>
+                    </div>
+                    <div class="text-2xl brand-red font-bold transform md:rotate-0 rotate-90">&rarr;</div>
+                    <div class="text-center p-4 bg-brand-red/10 border-2 border-brand-red rounded-lg w-full md:w-auto">
+                        <p class="text-2xl mb-2">⛰️</p>
+                        <p class="font-bold">Landfill</p>
+                        <p class="text-sm text-red-600">Decomposes for centuries</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8 mt-4">
+                 <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                    <span class="text-5xl">💧</span>
+                    <h4 class="text-xl font-bold brand-dark mt-2">20% of Global Wastewater</h4>
+                    <p class="text-slate-600 mt-1">Is from fabric dyeing and treatment, polluting rivers and streams with toxic chemicals.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                    <span class="text-5xl">💨</span>
+                    <h4 class="text-xl font-bold brand-dark mt-2">10% of Global Carbon Emissions</h4>
+                    <p class="text-slate-600 mt-1">More than all international flights and maritime shipping combined, driven by energy-intensive production.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                    <span class="text-5xl">🌊</span>
+                    <h4 class="text-xl font-bold brand-dark mt-2">500,000 Tons of Microplastics</h4>
+                    <p class="text-slate-600 mt-1">Enter the ocean each year from washing synthetic textiles like polyester, contaminating marine life.</p>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="text-center mt-12 text-slate-500 text-sm">
+            <p>Data sourced from reports by the UN Environment Programme, U.S. Environmental Protection Agency, and various environmental research organizations.</p>
+            <p>This infographic is a visual summary and intended for educational purposes.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function wrapLabel(label, maxWidth) {
+            if (typeof label !== 'string' || label.length <= maxWidth) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > maxWidth) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            });
+            lines.push(currentLine.trim());
+            return lines;
+        }
+        
+        const sharedTooltipOptions = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 12
+                        }
+                    }
+                }
+            }
+        };
+
+        window.onload = function () {
+            
+            const fateOfTextilesCtx = document.getElementById('fateOfTextilesChart').getContext('2d');
+            new Chart(fateOfTextilesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Landfilled', 'Incinerated', 'Recycled'],
+                    datasets: [{
+                        label: 'Fate of Discarded Textiles',
+                        data: [66, 19, 15],
+                        backgroundColor: ['#FF6B6B', '#FFD166', '#06D6A0'],
+                        borderColor: '#ffffff',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...sharedTooltipOptions,
+                    plugins: {
+                        ...sharedTooltipOptions.plugins,
+                        title: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            const landfillTrendCtx = document.getElementById('landfillTrendChart').getContext('2d');
+            new Chart(landfillTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1960', '1980', '2000', '2010', '2018'],
+                    datasets: [{
+                        label: 'Textiles Landfilled in U.S. (Million Tons)',
+                        data: [1.71, 2.32, 6.28, 8.90, 11.30],
+                        backgroundColor: 'rgba(255, 107, 107, 0.2)',
+                        borderColor: '#FF6B6B',
+                        pointBackgroundColor: '#FF6B6B',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#FF6B6B',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...sharedTooltipOptions,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Million Tons'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const fabricCompositionCtx = document.getElementById('fabricCompositionChart').getContext('2d');
+            new Chart(fabricCompositionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Synthetic Fibers (Plastic)', 'Natural & Other Fibers'],
+                    datasets: [{
+                        label: 'Fabric Composition',
+                        data: [60, 40],
+                        backgroundColor: ['#118AB2', '#06D6A0'],
+                        borderColor: '#ffffff',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...sharedTooltipOptions,
+                }
+            });
+
+            const topCountriesCtx = document.getElementById('topCountriesChart').getContext('2d');
+            new Chart(topCountriesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['China', 'USA', 'India', 'Italy', 'Germany'],
+                    datasets: [{
+                        label: 'Annual Textile Waste (Million Tons)',
+                        data: [20, 17, 7.8, 0.47, 0.39],
+                        backgroundColor: ['#118AB2', '#06D6A0', '#FFD166', '#FF6B6B', '#073B4C'],
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...sharedTooltipOptions,
+                     plugins: {
+                        ...sharedTooltipOptions.plugins,
+                        legend: {
+                           display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Million Tons per Year'
+                            }
+                        }
+                    }
+                }
+            });
+
+        };
+    </script>
+</body>
+</html>
